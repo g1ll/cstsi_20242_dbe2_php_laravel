@@ -17,6 +17,5 @@ $pessoaTres->calcImc(); //Pessoa
 $pessoaTres->verSalario(); //Funcionario
 $pessoaTres->areaAtuacao(); //meu metodo
 
-
 echo "\n====================VARDUMPS OBJETOS=============\n";
 var_dump($pessoaUm, $pessoaDois, $pessoaTres);
