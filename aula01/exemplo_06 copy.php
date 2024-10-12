@@ -29,12 +29,11 @@ class Pessoa
 			&& !is_numeric($this->peso)
 		) {
 			echo "\nIMC $this->nome: Erro, informe peso e altura corretamente.\n";
-            return;
+            return;//encerrou o metodo!!
         }
 
         $this->imc = $this->peso / $this->altura ** 2;
 		echo "\nO IMC do $this->nome é: " . number_format($this->imc, 2) . "\n";
-		
 	}
 }
 
@@ -44,6 +43,7 @@ class Funcionario extends Pessoa
 
 	function __construct($nome, $idade, $altura, $peso, $salario = 0)
 	{
+		//super
 		parent::__construct($nome, $idade, $altura, $peso);
 		$this->salario = $salario;
 	}
