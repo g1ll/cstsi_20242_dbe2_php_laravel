@@ -12,5 +12,10 @@
             "email": "gillgonzales@ifsul.edu.br"
         }
     ],
-    "require": {}
+    "scripts":{
+        "start":"php -S localhost:8080 -t src"
+    },
+    "require": {
+        "brandonwamboldt/utilphp": "^1.1"
+    }
 }
