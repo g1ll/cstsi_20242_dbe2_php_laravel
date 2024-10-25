@@ -7,7 +7,7 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Página Inicial</h1>
+    <h1>{{$title}}</h1>
     <p>{{$content}}</p>
 </body>
 </html>
