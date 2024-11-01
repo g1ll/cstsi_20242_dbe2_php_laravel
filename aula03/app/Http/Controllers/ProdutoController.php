@@ -20,4 +20,21 @@ class ProdutoController extends Controller
         // dd(Produto::find($id));
         return view('produto.show',['produto'=>Produto::find($id)]);
     }
+
+    public function create(){
+        return view('produto.create');
+    }
+
+    public function store(Request $req){
+        // dd($req->all());
+        $produto = $req->all();
+        $produto['importado']=$req->has('importado');
+        // dd($produto);
+
+        if(Produto::create($produto)){
+            return redirect('/produtos');
+        }else {
+            dd("Erro ao inserir Produto!!");
+        }
+    }
 }
