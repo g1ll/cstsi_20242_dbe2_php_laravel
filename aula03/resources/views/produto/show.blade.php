@@ -14,5 +14,6 @@
         <li><b>Qtd:</b>{{$produto->qtd_estoque}}</li>
         <li><b>Origem:</b>{{$produto->importado?"Importado":"Nacional"}}</li>
     </ul>
+    <a href="/produtos">voltar</a>
 </body>
 </html>
