@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -37,4 +38,37 @@ class ProdutoController extends Controller
             dd("Erro ao inserir Produto!!");
         }
     }
+
+    public function edit($id){
+        return view('produto.edit',[
+            'produto'=>Produto::find($id)
+        ]);
+    }
+
+    public function update(Request $request,$id){
+        // dd([
+        //     $request->all(),
+        //     $id
+        // ]);
+        $produto = $request->all();
+        $produto['importado']=$request->has('importado');
+
+        try{
+            Produto::findOrFail($id)->update($produto);
+            return redirect('/produtos');
+        }catch(Exception $error){
+            dd($error);
+        }
+    }
+
+    public function destroy($id){
+        try{
+            Produto::destroy($id);
+            return redirect('/produtos');
+        }catch(Exception $error){
+            dd($error);
+        }
+    }
+
+
 }

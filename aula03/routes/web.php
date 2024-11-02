@@ -22,3 +22,20 @@ Route::get('/produtos/{id}',[ProdutoController::class,'show']);
 Route::get('/produto',[ProdutoController::class,'create'])->name('produto.create');
 
 Route::post('/produto',[ProdutoController::class,'store']);
+
+Route::get('/produto/{id}',[
+    ProdutoController::class,
+    'edit']
+)->name('produto.edit');
+
+Route::post('/produto/{id}/update',[
+    ProdutoController::class,
+    'update']
+)->name('produto.update');
+
+
+Route::get('/produto/{id}/delete',[
+    ProdutoController::class,
+    'destroy']
+)->name('produto.delete');
+
