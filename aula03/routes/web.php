@@ -15,27 +15,20 @@ Route::get('/ola',function () {
 
 Route::get('/home',[HomeController::class,'index']);
 
-Route::get('/produtos',[ProdutoController::class,'index']);
+Route::prefix('/produtos')->group(function () {
+    Route::get('/', [ProdutoController::class, 'index'])->name("produto.index");
+    Route::get('/{id}',[ProdutoController::class, 'show'])->name("produto.show");
+});
 
-Route::get('/produtos/{id}',[ProdutoController::class,'show']);
+Route::prefix('/produto')->group(function () {
+    Route::get('/',[ProdutoController::class, 'create'] )->name("produto.create");
+    Route::post('/',[ProdutoController::class, 'store'])->name("produto.store");
+    Route::get('/{id}/edit',[ProdutoController::class, 'edit'])->name("produto.edit");
+    Route::post('/{id}/update',[ProdutoController::class, 'update'])->name("produto.update");
+    Route::get('/{id}/delete',[
+        ProdutoController::class,
+        'destroy']
+    )->name('produto.delete');
+});
 
-Route::get('/produto',[ProdutoController::class,'create'])->name('produto.create');
-
-Route::post('/produto',[ProdutoController::class,'store']);
-
-Route::get('/produto/{id}',[
-    ProdutoController::class,
-    'edit']
-)->name('produto.edit');
-
-Route::post('/produto/{id}/update',[
-    ProdutoController::class,
-    'update']
-)->name('produto.update');
-
-
-Route::get('/produto/{id}/delete',[
-    ProdutoController::class,
-    'destroy']
-)->name('produto.delete');
 
