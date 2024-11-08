@@ -15,20 +15,23 @@ Route::get('/ola',function () {
 
 Route::get('/home',[HomeController::class,'index']);
 
-Route::prefix('/produtos')->group(function () {
-    Route::get('/', [ProdutoController::class, 'index'])->name("produto.index");
-    Route::get('/{id}',[ProdutoController::class, 'show'])->name("produto.show");
-});
 
-Route::prefix('/produto')->group(function () {
-    Route::get('/',[ProdutoController::class, 'create'] )->name("produto.create");
-    Route::post('/',[ProdutoController::class, 'store'])->name("produto.store");
-    Route::get('/{id}/edit',[ProdutoController::class, 'edit'])->name("produto.edit");
-    Route::post('/{id}/update',[ProdutoController::class, 'update'])->name("produto.update");
-    Route::get('/{id}/delete',[
-        ProdutoController::class,
-        'destroy']
-    )->name('produto.delete');
+Route::controller(ProdutoController::class)->group(function(){
+    Route::prefix('/produtos')->group(function () {
+        Route::get('/','index')->name("produto.index");
+        Route::get('/{id}','show')->name("produto.show");
+    });
+
+    Route::prefix('/produto')->group(function () {
+        Route::get('/','create')->name("produto.create");
+        Route::post('/','store')->name("produto.store");
+        Route::get('/{id}/edit','edit')->name("produto.edit");
+        Route::post('/{id}/update','update')->name("produto.update");
+        Route::get('/{id}/delete',[
+            ProdutoController::class,
+            'destroy']
+        )->name('produto.delete');
+    });
 });
 
 
