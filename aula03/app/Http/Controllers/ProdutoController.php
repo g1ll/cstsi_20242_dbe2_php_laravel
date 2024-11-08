@@ -17,9 +17,14 @@ class ProdutoController extends Controller
         return View::make('produto.index',['data'=>$listProdutos]);//facade
     }
 
-    function show($id){
+    function show(Produto $produto){
         // dd(Produto::find($id));
-        return view('produto.show',['produto'=>Produto::find($id)]);
+        // dd($produto);
+
+        return view('produto.show',[
+            // 'produto'=>Produto::find($id)
+            'produto'=>$produto
+        ]);
     }
 
     public function create(){
