@@ -61,6 +61,17 @@ class ProdutoController extends Controller
         }
     }
 
+    public function remove($id){
+        // return view("produto.remove",["produto"=>Produto::find($id)]);
+        try{
+            return view("produto.remove",[
+                "produto"=>Produto::findOrFail($id)
+            ]);
+        }catch(Exception $error){
+            dd($error);
+        }
+    }
+
     public function destroy($id){
         try{
             Produto::destroy($id);

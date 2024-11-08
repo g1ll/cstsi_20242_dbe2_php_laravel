@@ -12,7 +12,7 @@
     <h1>Insert new Produto</h1>
     <form action="/produto" method="POST">
         @csrf
-        {{-- <input type="hidden" name="_token" value="{{csrf_token()}}"/> --}}
+        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
         <table>
             <tr>
                 <td>Nome:</td>
