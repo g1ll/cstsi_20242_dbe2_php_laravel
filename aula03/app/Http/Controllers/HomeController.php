@@ -18,7 +18,7 @@ class HomeController extends Controller
         // ]);
 
         return View::make('home',[
-            "title"=>"Página Inicial!!!",
+            "title"=>"Página Inicial!!",
             "content"=>$text
         ]);
     }
