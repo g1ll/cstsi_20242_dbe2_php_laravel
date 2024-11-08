@@ -19,7 +19,8 @@ class ProdutoController extends Controller
 
     function show($id){
         // dd(Produto::find($id));
-        return view('produto.show',['produto'=>Produto::find($id)]);
+        return view('produto.show',
+        ['produto'=>Produto::findOrFail($id)]);
     }
 
     public function create(){
