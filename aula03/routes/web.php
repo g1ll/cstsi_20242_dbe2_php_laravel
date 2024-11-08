@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FabricanteController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutoController;
@@ -66,3 +67,5 @@ Route::controller(ProdutoController::class)->group(function () {
         // Route::post('/','store')->name('produto.novo_store');
     });
 });
+
+Route::apiResource('fabricantes',FabricanteController::class);
