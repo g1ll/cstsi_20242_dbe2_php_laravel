@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Produtos</h1>
-    <a href="/produto">+Criar Novo Produto</a>
+    <a href="{{route("produtos.create")}}">+Criar Novo Produto</a>
     @if ($data->count()>0)
     <table>
         <thead>
@@ -31,10 +31,10 @@
                 <td>{{$produto->preco}}</td>
                 <td>{{($produto->importado)?'Sim':'Não'}}</td>
                 <td>
-                    <a href="/produto/{{$produto->id}}">editar</a>
+                    <a href="{{route("produtos.edit",$produto->id)}}">editar</a>
                 </td>
                 <td>
-                    <a href="/produto/{{$produto->id}}/delete">deletar</a>
+                    <a href="{{route("produto.delete",$produto->id)}}">deletar</a>
                 </td>
             </tr>
             @endforeach
