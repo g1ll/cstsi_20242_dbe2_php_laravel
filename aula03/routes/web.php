@@ -54,7 +54,7 @@ Route::resource('produtos', ProdutoController::class);
 
 Route::controller(ProdutoController::class)->group(function () {
     Route::prefix('produtos')->group(function () {
-        Route::post('/{produto}/update', 'update')->name("produto.update");
+        // Route::post('/{produto}/update', 'update')->name("produto.update");
         Route::get(
             '/{produto}/delete',
             [
