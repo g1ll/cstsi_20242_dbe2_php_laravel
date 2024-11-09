@@ -11,8 +11,11 @@
 <body>
     @if($produto)
     <h1>Update Produto</h1>
-    <form action="{{route('produto.update',$produto->id)}}" method="POST">
-        @csrf
+    <form action="{{route('produtos.update',$produto->id)}}" method="POST">
+        {{-- @csrf --}}
+        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+        {{-- <input type="hidden" name="_method" value="put"/> --}}
+        @method('put')
         <table>
             <tr>
                 <td>Nome:</td>

@@ -44,22 +44,22 @@ class ProdutoController extends Controller
         }
     }
 
-    public function edit($id){
+    public function edit(Produto $produto){
         return view('produto.edit',[
-            'produto'=>Produto::find($id)
+            'produto'=>$produto
         ]);
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request,Produto $produto){
         // dd([
         //     $request->all(),
         //     $id
         // ]);
-        $produto = $request->all();
-        $produto['importado']=$request->has('importado');
+        $updatedProduto = $request->all();
+        $updatedProduto['importado']=$request->has('importado');
 
         try{
-            Produto::findOrFail($id)->update($produto);
+            $produto->update($updatedProduto);
             return redirect('/produtos');
         }catch(Exception $error){
             dd($error);
@@ -77,9 +77,10 @@ class ProdutoController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy(Produto $produto){
+        // dd($produto->id);
         try{
-            Produto::destroy($id);
+            Produto::destroy($produto->id);
             return redirect('/produtos');
         }catch(Exception $error){
             dd($error);
