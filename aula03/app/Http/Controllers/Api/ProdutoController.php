@@ -8,6 +8,7 @@ use App\Http\Resources\ProdutoResource;
 use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ProdutoController extends Controller
 {
@@ -40,7 +41,9 @@ class ProdutoController extends Controller
                 "message" => "Produto criado com sucesso!!!",
             ], 201);
         } catch (Exception $error) {
-            return response()->json("Erro ao cadastrar produto!!!");
+            $httpStatus = 500;
+            if($error instanceof ValidationException) $httpStatus = 422;
+            return response()->json("Erro ao cadastrar produto!!!",$httpStatus);
         }
     }
 
