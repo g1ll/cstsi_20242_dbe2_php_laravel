@@ -44,7 +44,16 @@ class ProdutoController extends Controller
             throw $error;
         } catch (Exception $error) {
             $httpStatus = 500;
-            return response()->json("Erro ao cadastrar produto!!!",$httpStatus);
+            $message = "Erro ao cadastrar produto!!!";
+            $response = ["Erro"=>$message];
+            if(env('APP_DEBUG'))
+                $response = [
+                    ...$response,
+                    'message'=>$error->getMessage(),
+                    'exception'=>$error,
+                    'trace'=>$error->getTrace()
+            ];
+            return response()->json($response,$httpStatus);
         }
     }
 
