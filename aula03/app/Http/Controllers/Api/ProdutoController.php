@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProdutoCollection;
 use App\Http\Resources\ProdutoResource;
 use App\Models\Produto;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -23,23 +24,22 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "nome" => "required | max: 10",
-            "importado" => "nullable | boolean",
-            "qtd_estoque" => "required | numeric | min:2",
-            "descricao" => "required | max:500",
-            "preco" => "required | numeric | min: 1.99",
-        ]);
-        $produto = $request->all();
-        $produto['importado'] = $request->has('importado');
-        $novoProduto  = Produto::create($produto);
-        if ($novoProduto) {
-            // return new ProdutoResource($novoProduto);
+        try {
+            $request->validate([
+                "nome" => "required | max: 10",
+                "importado" => "nullable | boolean",
+                "qtd_estoque" => "required | numeric | min:2",
+                "descricao" => "required | max:500",
+                "preco" => "required | numeric | min: 1.99",
+            ]);
+            $produto = $request->all();
+            $produto['importado'] = $request->has('importado');
+            $novoProduto  = Produto::create($produto);
             return response()->json([
                 "data" => $novoProduto,
                 "message" => "Produto criado com sucesso!!!",
             ], 201);
-        } else {
+        } catch (Exception $error) {
             return response()->json("Erro ao cadastrar produto!!!");
         }
     }
