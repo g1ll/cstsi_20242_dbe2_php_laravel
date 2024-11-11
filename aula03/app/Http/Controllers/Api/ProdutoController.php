@@ -40,9 +40,10 @@ class ProdutoController extends Controller
                 "data" => $novoProduto,
                 "message" => "Produto criado com sucesso!!!",
             ], 201);
+        } catch (ValidationException $error) {
+            throw $error;
         } catch (Exception $error) {
             $httpStatus = 500;
-            if($error instanceof ValidationException) throw $error;
             return response()->json("Erro ao cadastrar produto!!!",$httpStatus);
         }
     }
