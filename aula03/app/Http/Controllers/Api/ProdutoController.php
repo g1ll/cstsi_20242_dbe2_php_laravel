@@ -42,7 +42,7 @@ class ProdutoController extends Controller
             ], 201);
         } catch (Exception $error) {
             $httpStatus = 500;
-            if($error instanceof ValidationException) $httpStatus = 422;
+            if($error instanceof ValidationException) throw $error;
             return response()->json("Erro ao cadastrar produto!!!",$httpStatus);
         }
     }
