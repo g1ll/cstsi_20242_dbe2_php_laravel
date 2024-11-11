@@ -23,17 +23,23 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['preco'=>'required']);
+        $request->validate([
+            "nome" => "required | max: 10",
+            "importado" => "nullable | boolean",
+            "qtd_estoque" => "required | numeric | min:2",
+            "descricao" => "required | max:500",
+            "preco" => "required | numeric | min: 1.99",
+        ]);
         $produto = $request->all();
-        $produto['importado']=$request->has('importado');
+        $produto['importado'] = $request->has('importado');
         $novoProduto  = Produto::create($produto);
-        if($novoProduto){
+        if ($novoProduto) {
             // return new ProdutoResource($novoProduto);
             return response()->json([
-                "data"=>$novoProduto,
-                "message"=>"Produto criado com sucesso!!!",
-            ],201);
-        }else {
+                "data" => $novoProduto,
+                "message" => "Produto criado com sucesso!!!",
+            ], 201);
+        } else {
             return response()->json("Erro ao cadastrar produto!!!");
         }
     }
