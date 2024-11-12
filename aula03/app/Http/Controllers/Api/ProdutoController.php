@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProdutoStoreRequest;
 use App\Http\Resources\ProdutoCollection;
 use App\Http\Resources\ProdutoResource;
 use App\Models\Produto;
@@ -23,19 +24,10 @@ class ProdutoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProdutoStoreRequest $request)
     {
         try {
-            $request->validate([
-                "nome" => "required | max: 10",
-                "importado" => "nullable | boolean",
-                "qtd_estoque" => "required | numeric | min:2",
-                "descricao" => "required | max:500",
-                "preco" => "required | numeric | min: 1.99",
-            ]);
-            $produto = $request->all();
-            $produto['importado'] = $request->has('importado');
-            $novoProduto  = Produto::create($produto);
+            $novoProduto  = Produto::create($request->validated());
             return (new ProdutoResource($novoProduto))
                         ->additional(["message" => "Produto criado com sucesso!!",]) //Novo atributo no json retornado
                         ->response() //Objeto JsonResponse do Synfoni
