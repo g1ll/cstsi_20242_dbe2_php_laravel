@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProdutoStoreRequest;
 use App\Http\Resources\ProdutoCollection;
 use App\Http\Resources\ProdutoResource;
+use App\Http\Resources\ProdutoStoredResource;
 use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
@@ -28,12 +29,7 @@ class ProdutoController extends Controller
     {
         try {
             $novoProduto  = Produto::create($request->validated());
-            return (new ProdutoResource($novoProduto))
-                        ->additional(["message" => "Produto criado com sucesso!!",]) //Novo atributo no json retornado
-                        ->response() //Objeto JsonResponse do Synfoni
-                        ->setStatusCode(201, 'Produto Criado!!!');//método do objeto JsonResponse
-        } catch (ValidationException $error) {
-            throw $error;
+            return new ProdutoStoredResource($novoProduto);
         } catch (Exception $error) {
             $httpStatus = 500;
             $message = "Erro ao cadastrar produto!!!";
