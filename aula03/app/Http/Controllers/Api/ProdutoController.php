@@ -37,9 +37,9 @@ class ProdutoController extends Controller
             $produto['importado'] = $request->has('importado');
             $novoProduto  = Produto::create($produto);
             return (new ProdutoResource($novoProduto))
-                ->additional(["message" => "Produto criado com sucesso!!",])
-                ->response()
-                ->setStatusCode(201, 'Produto Criado!!!');
+                        ->additional(["message" => "Produto criado com sucesso!!",]) //Novo atributo no json retornado
+                        ->response() //Objeto JsonResponse do Synfoni
+                        ->setStatusCode(201, 'Produto Criado!!!');//método do objeto JsonResponse
         } catch (ValidationException $error) {
             throw $error;
         } catch (Exception $error) {
