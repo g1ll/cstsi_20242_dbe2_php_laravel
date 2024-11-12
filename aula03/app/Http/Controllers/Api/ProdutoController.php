@@ -36,23 +36,24 @@ class ProdutoController extends Controller
             $produto = $request->all();
             $produto['importado'] = $request->has('importado');
             $novoProduto  = Produto::create($produto);
-            return (new ProdutoResource($novoProduto))->additional([
-                "message"=>"Produto criado com sucesso!!",
-            ])->response()->setStatusCode(201,'Produto Criado!!!');
+            return (new ProdutoResource($novoProduto))
+                ->additional(["message" => "Produto criado com sucesso!!",])
+                ->response()
+                ->setStatusCode(201, 'Produto Criado!!!');
         } catch (ValidationException $error) {
             throw $error;
         } catch (Exception $error) {
             $httpStatus = 500;
             $message = "Erro ao cadastrar produto!!!";
-            $response = ["Erro"=>$message];
-            if(env('APP_DEBUG'))
+            $response = ["Erro" => $message];
+            if (env('APP_DEBUG'))
                 $response = [
                     ...$response,
-                    'message'=>$error->getMessage(),
-                    'exception'=>$error,
-                    'trace'=>$error->getTrace()
-            ];
-            return response()->json($response,$httpStatus);
+                    'message' => $error->getMessage(),
+                    'exception' => $error,
+                    'trace' => $error->getTrace()
+                ];
+            return response()->json($response, $httpStatus);
         }
     }
 
