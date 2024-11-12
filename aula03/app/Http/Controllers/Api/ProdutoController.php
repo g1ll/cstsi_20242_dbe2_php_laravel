@@ -38,7 +38,7 @@ class ProdutoController extends Controller
             $novoProduto  = Produto::create($produto);
             return (new ProdutoResource($novoProduto))->additional([
                 "message"=>"Produto criado com sucesso!!",
-            ]);
+            ])->response()->setStatusCode(201,'Produto Criado!!!');
         } catch (ValidationException $error) {
             throw $error;
         } catch (Exception $error) {
