@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class LoginRequest extends FormRequest
 {
@@ -11,6 +14,10 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        $user = User::where('email', $this->email)->first();
+            if(!$user || !Hash::check($this->password, $user->password))
+                throw new Exception('Credenciais inválidas');
+        $this->merge(['user'=>$user]);
         return true;
     }
 
