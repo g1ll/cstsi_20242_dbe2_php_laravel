@@ -47,7 +47,12 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
-        //
+        try {
+            $produto->update($request->validated());
+            return (new ProdutoResource($produto))->additional(['message' => 'Produto atualizado com sucesso!!']);
+        } catch (Exception $error) {
+            return $this->errorHandler("Erro ao atualizar produto!!", $error);
+        }
     }
 
     /**
@@ -55,6 +60,11 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        //
+        try {
+            $produto->delete();
+            return (new ProdutoResource($produto))->additional(["message" => "Produto removido!!!"]);
+        } catch (Exception $error) {
+            return $this->errorHandler("Erro ao remover produto!!", $error);
+        }
     }
 }
