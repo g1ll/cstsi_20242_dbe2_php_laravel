@@ -44,8 +44,11 @@ class UserStoreRequest extends FormRequest
         ];
     }
 
-    protected function passedValidation(): void
-    {
-        $this->merge(['password' => Hash::make($this->input('password'))]);
-    }
+    //Não há necessidade deste método, pois o Laravel (+10.10) já faz isso automaticamente
+    //A senha é criptografada automaticamente no Model User, usando o método casts e
+    //aplicando o Mutator 'hashed' no campo password
+    // protected function passedValidation(): void
+    // {
+    //     $this->merge(['password' => Hash::make($this->input('password'))]);
+    // }
 }
