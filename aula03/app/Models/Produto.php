@@ -15,4 +15,14 @@ class Produto extends Model
         'preco',
         'importado'
     ];
+
+    protected $casts = [
+        'importado' => 'boolean'
+    ];
+
+    public function fornecedor()
+    {
+        return $this->belongsTo(Fornecedor::class);
+    }
+
 }
