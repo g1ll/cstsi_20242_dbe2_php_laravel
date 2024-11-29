@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\ProdutoStoreRequest;
+use App\Http\Requests\ProdutoUpdateRequest;
 use App\Http\Resources\ProdutoCollection;
 use App\Http\Resources\ProdutoResource;
 use App\Http\Resources\ProdutoStoredResource;
@@ -45,11 +46,12 @@ class ProdutoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Produto $produto)
+    public function update(ProdutoUpdateRequest $request, Produto $produto)//FormRequest
     {
         try {
             $produto->update($request->validated());
-            return (new ProdutoResource($produto))->additional(['message' => 'Produto atualizado com sucesso!!']);
+            return (new ProdutoResource($produto))
+                ->additional(['message' => 'Produto atualizado com sucesso!!']);
         } catch (Exception $error) {
             return $this->errorHandler("Erro ao atualizar produto!!", $error);
         }
@@ -60,9 +62,11 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
+        // return response()->json($produto);
         try {
             $produto->delete();
-            return (new ProdutoResource($produto))->additional(["message" => "Produto removido!!!"]);
+            return (new ProdutoResource($produto))
+                ->additional(["message" => "Produto removido!!!"]);
         } catch (Exception $error) {
             return $this->errorHandler("Erro ao remover produto!!", $error);
         }

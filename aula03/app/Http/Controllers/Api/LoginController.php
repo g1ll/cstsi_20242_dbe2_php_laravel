@@ -16,7 +16,7 @@ class LoginController extends Controller
         try{
             $user=$request->user;
             $token = $user->createToken($user)->plainTextToken;
-            return compact('token');
+            return compact('token');//['token'=>$token]
         }catch(Exception $error){
             $this->errorHandler('Erro ao realizar login', $error, 401);
         }
@@ -25,7 +25,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         try{
-            $request->user()->tokens()->delete();
+            // return response()->json($request->user());
+            $request->user()->tokens()->delete();//currentAccessToken()->delete();
             return response()->json(['message' => 'Logout realizado com sucesso']);
         }catch(Exception $error){
             $this->errorHandler('Erro ao realizar logout', $error, 401);
