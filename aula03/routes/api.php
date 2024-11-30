@@ -26,6 +26,11 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth:sanctum');
 
+//Erro: o laravel tentava buscar o produto de id=reigao
+//Route::get('/produtos/regiao)',function(){ //A rota errada
+
+//Todos os produtos com fornecedores que estão em estados
+//e que estão na região de nome  determinado por $nome
 Route::get('/produtos/query/regiao/{nome}',function($nome){
     return Produto::with('fornecedor')->whereHas('fornecedor',
             fn($q)=>$q->whereHas('estado',
