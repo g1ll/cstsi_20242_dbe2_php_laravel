@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ProdutoController;
 use App\Http\Controllers\Api\UserController;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,13 @@ Route::apiResource('users',UserController::class)
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth:sanctum');
+
+Route::get('/produtos/query/regiao/{nome}',function($nome){
+    return Produto::with('fornecedor')->whereHas('fornecedor',
+            fn($q)=>$q->whereHas('estado',
+                fn($q)=>$q->whereHas('regiao',
+                    fn($q)=>$q->where('nome','like',$nome)
+                    )
+                )
+            )->get();
+});
