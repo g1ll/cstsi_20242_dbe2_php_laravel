@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Produto extends Model
 {
+
+    use HasFactory;
+
     // protected $table = "product";
     // protected $primaryKey = "cpf";
     protected $fillable = [
@@ -13,7 +17,8 @@ class Produto extends Model
         'descricao',
         'qtd_estoque',
         'preco',
-        'importado'
+        'importado',
+        'fornecedor_id'
     ];
 
     protected $casts = [
