@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Fornecedor;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@dev.test',
-            'password' => env('APP_ADMIN_PASSWORD','adminadmin')
+            'password' => env('APP_ADMIN_PASSWORD', 'adminadmin')
         ]);
 
 
@@ -26,5 +27,9 @@ class DatabaseSeeder extends Seeder
             RegiaoSeeder::class,
             EstadoSeeder::class,
         ]);
+
+        Fornecedor::factory(5)
+            ->hasProdutos(10)
+            ->create();
     }
 }
