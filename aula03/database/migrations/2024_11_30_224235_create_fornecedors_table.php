@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('fornecedores', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->text('endereco');
+            $table->string('cnpj');
+            $table->string('telefone');
+            $table->string('email');
+            // $table->foreignId('estado_id')
+            //     ->references('id')->on('estados')
+            //     ->cascadeOnDelete();
+            $table->foreignId('estado_id')
+                ->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
