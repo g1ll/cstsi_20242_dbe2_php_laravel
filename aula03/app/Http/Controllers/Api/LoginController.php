@@ -16,7 +16,7 @@ class LoginController extends Controller
         try{
             $user=$request->user;
             $token = $user->createToken($user)->plainTextToken;
-            return compact('token');//['token'=>$token]
+            return compact('token','user');//['token'=>$token,'user'=>$user];
         }catch(Exception $error){
             $this->errorHandler('Erro ao realizar login', $error, 401);
         }
