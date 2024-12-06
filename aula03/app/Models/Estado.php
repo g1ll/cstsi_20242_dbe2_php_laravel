@@ -14,4 +14,8 @@ class Estado extends Model
     public function regiao(){
         return $this->belongsTo(Regiao::class);
     }
+
+    public function fornecedores(){
+        return $this->hasMany(Fornecedor::class);
+    }
 }
