@@ -26,10 +26,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RegiaoSeeder::class,
             EstadoSeeder::class,
+            PromocaoSeeder::class
         ]);
 
-        Fornecedor::factory(5)
+        Fornecedor::factory(10)
             ->hasProdutos(10)
             ->create();
+
+        $this->call([
+            ProdutoPromocaoSeeder::class
+        ]);
     }
 }
