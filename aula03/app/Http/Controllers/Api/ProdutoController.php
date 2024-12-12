@@ -11,6 +11,7 @@ use App\Http\Resources\ProdutoStoredResource;
 use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class ProdutoController extends Controller
@@ -29,7 +30,15 @@ class ProdutoController extends Controller
     public function store(ProdutoStoreRequest $request)
     {
         try {
-            return new ProdutoStoredResource(Produto::create($request->validated()));
+            $newProduto = $request->validated();
+            if ($request->file('imagem')) {
+                $fileName = $request->file('imagem')->hashName();
+                if (!$request->file('imagem')->store('produtos', 'public'))
+                    throw new Exception("Erro ao salvar imagem do produto!!");
+
+                $newProduto['imagem'] = $fileName;
+            }
+            return new ProdutoStoredResource(Produto::create($newProduto));
         } catch (Exception $error) {
             $this->errorHandler("Erro ao criar Produto!!",$error);
         }
@@ -49,7 +58,22 @@ class ProdutoController extends Controller
     public function update(ProdutoUpdateRequest $request, Produto $produto)//FormRequest
     {
         try {
-            $produto->update($request->validated());
+            $newProduto = $request->validated();
+            if ($request->file('imagem')) {
+                $fileName = $request->file('imagem')->hashName();
+
+                if (!$request->file('imagem')->store('produtos', 'public'))
+                    throw new Exception("Erro ao salvar imagem do produto!!");
+
+                if ($produto->imagem) {
+                    $path = 'produtos/';
+                    if(Storage::disk('public')->exists($path.$produto->imagem))
+                        Storage::disk('public')->delete($path.$produto->imagem);
+                }
+
+                $newProduto['imagem'] = $fileName;
+            }
+            $produto->update($newProduto);
             return (new ProdutoResource($produto))
                 ->additional(['message' => 'Produto atualizado com sucesso!!']);
         } catch (Exception $error) {
@@ -62,9 +86,13 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        // return response()->json($produto);
         try {
             $produto->delete();
+            if ($produto->imagem) {
+                $path = 'produtos/';
+                if(Storage::disk('public')->exists($path.$produto->imagem))
+                    Storage::disk('public')->delete($path.$produto->imagem);
+            }
             return (new ProdutoResource($produto))
                 ->additional(["message" => "Produto removido!!!"]);
         } catch (Exception $error) {
