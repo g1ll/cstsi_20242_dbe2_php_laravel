@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('preco');
             $table->integer('qtd_estoque');
             $table->boolean('importado')->default(false);
+            $table->text('imagem')->nullable();
             $table->timestamps();
         });
     }
