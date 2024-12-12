@@ -27,6 +27,8 @@ class ProdutoUpdateRequest extends FormRequest
             "qtd_estoque"=>"nullable | numeric | min:1",
             "preco"=>"nullable | numeric | min:1.99",
             "importado"=>"nullable | boolean",
+            "imagem" => "nullable | image",
+            "fornecedor_id"=> "nullable | exists:fornecedores,id",
         ];
     }
 }
