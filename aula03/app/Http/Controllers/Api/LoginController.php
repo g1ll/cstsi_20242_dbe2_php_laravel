@@ -15,6 +15,7 @@ class LoginController extends Controller
     {
         try{
             $user=$request->user;
+            if(!$user) throw new Exception('Usuário não encontrado', 401);
             $token = $user->createToken($user)->plainTextToken;
             return compact('token','user');//['token'=>$token,'user'=>$user];
         }catch(Exception $error){
